@@ -1,4 +1,4 @@
-import { GiCrossMark } from "react-icons/gi";
+import { RxCross2 } from "react-icons/rx";
 import { LuUserPlus } from "react-icons/lu";
 import Button from 'react-bootstrap/Button';
 import { TiThMenu } from "react-icons/ti";
@@ -31,20 +31,19 @@ function Navbar() {
     return (
         <>
             <section className='bg-blue-900'>
-                <nav className='flex w-full justify-between top-0 text-white transition-all px-11 py-3 lg:px-10 m-auto font-sans items-center z-10 sticky'>
+                <nav className='flex w-full justify-between top-0 text-white transition-none px-11 py-3 lg:px-10 m-auto font-sans items-center z-10 sticky'>
                     <span className="uppercase text-2xl">logo</span>
-                    <motion.ul 
-                        layoutId="underline" 
+                    <ul
                         className={`capitalize flex space-x-4 max-md:hidden items-center text-sm ${navBar ? 'hidden' : 'flex'}`}
                     >
                         <li><Link to='/'>home</Link></li>
                         <li><Link to='#'>about</Link></li>
                         <li><Link to='#'>contact</Link></li>
                         <li><Link to='#'>news</Link></li>
-                    </motion.ul>
+                    </ul>
                     <div className="flex space-x-4">
                         <button className="lg:hidden md:hidden" onClick={() => setNavbar(!navBar)}>
-                            {navBar ? <GiCrossMark className="text-3xl" /> : <TiThMenu className='text-3xl' />}
+                            {navBar ? ( <span className="hidden"></span>) : ( <TiThMenu className='text-3xl' />)}
                         </button>
                         <Button onClick={() => setDropdownVisible(!dropdownVisible)}>
                             <LuUserPlus className="text-xl" />
@@ -56,17 +55,22 @@ function Navbar() {
                 {navBar && (
                     <motion.div
                         ref={menuRef}
-                        className="block absolute mx-2 transition-all border px-8 py-8 rounded-md border-gray-400 justify-center items-center"
-                        initial={{ left: -100 }}
-                        animate={{ left: 0 }}
-                        exit={{ left: -100 }}
+                        className="absolute flex flex-col items-center float-right w-1/5 max-w-60 h-full right-0 z-10 top-0 m-0 bg-white transition-all px-8 py-8 rounded-md"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
                         transition={{ duration: 0.2, ease: "easeInOut" }}
                     >
-                        <ul className='capitalize flex flex-col gap-7 pb-2 text-gray-600 text-center m-auto text-sm'>
-                            <li><Link to='/'>home</Link></li>
-                            <li><Link to='#'>about</Link></li>
-                            <li><Link to='#'>contact</Link></li>
-                            <li><Link to='#'>news</Link></li>
+                        <div>
+                            <Button variant="danger" onClick={() => setNavbar(!navBar)} className="mb-4">
+                                 <RxCross2 />
+                            </Button>
+                        </div>
+                        <ul className='capitalize flex flex-col gap-7 text-gray-900 text-center text-sm'>
+                            <li><Link onClick={() => setNavbar(!navBar)} to='/'>home</Link></li>
+                            <li><Link onClick={() => setNavbar(!navBar)} to='#'>about</Link></li>
+                            <li><Link onClick={() => setNavbar(!navBar)} to='#'>contact</Link></li>
+                            <li><Link onClick={() => setNavbar(!navBar)} to='#'>news</Link></li>
                         </ul>
                     </motion.div>
                 )}
@@ -76,14 +80,14 @@ function Navbar() {
                 {dropdownVisible && (
                     <motion.div
                         ref={dropdownRef}
-                        className="mx-8 flex right-0 float-right absolute capitalize p-2 gap-2 text-sm border border-gray-400 rounded-md flex-col"
+                        className="mx-8 flex bg-white right-0 float-right absolute capitalize p-2 gap-2 text-sm border border-gray-400 rounded-md flex-col"
                         initial={{ opacity: 0, top: 50 }}
                         animate={{ opacity: 1, top: 60 }}
                         exit={{ opacity: 0, top: 50 }}
                         transition={{ duration: 0.2, ease: "easeInOut" }}
                     >
-                        <Link to='/signup' className="uppercase">signup</Link>
-                        <Link to='/signin' className="uppercase">login</Link>
+                        <Link to='/signup' className="capitalize">signup</Link>
+                        <Link to='/signin' className="capitalize">login</Link>
                     </motion.div>
                 )}
             </AnimatePresence>
