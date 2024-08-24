@@ -32,7 +32,7 @@ function Navbar() {
     return (
         <>
             <section className='bg-blue-900 max-w-6xl lg:rounded-b-lg mx-auto'>
-                <nav className='flex w-full min-w-48 justify-between top-0 text-white transition-none px-20 py-3 lg:px-10 mx-auto font-sans items-center z-10 sticky'>
+                <nav className='flex w-full min-w-48 justify-between top-0 text-white transition-none px-20 py-3 lg:px-10 font-sans items-center z-10 sticky'>
                     <span className="uppercase text-2xl">logo</span>
                     <ul
                         className={`capitalize flex space-x-4 max-md:hidden items-center text-sm ${navBar ? 'hidden' : 'flex'}`}
@@ -75,7 +75,7 @@ function Navbar() {
                 {navBar && (
                     <motion.div
                         ref={menuRef}
-                        className="absolute flex flex-col items-center float-right w-1/5 max-w-60 h-full right-0 z-10 top-0 m-0 bg-white transition-all px-8 py-8 rounded-md"
+                        className="absolute flex flex-col items-center float-right w-1/5 max-w-60 h-full right-0 z-10 top-0 m-0 bg-blue-700 transition-all px-8 py-8 rounded-md"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -86,7 +86,7 @@ function Navbar() {
                                  <RxCross2 />
                             </Button>
                         </div>
-                        <ul className='capitalize flex flex-col gap-7 text-gray-900 text-center text-sm'>
+                        <ul className='capitalize z-10 flex flex-col gap-7 text-gray-100 text-center text-sm'>
                             <li><Link onClick={() => setNavbar(!navBar)} to='/'>home</Link></li>
                             <li><Link onClick={() => setNavbar(!navBar)} to='#'>about</Link></li>
                             <li><Link onClick={() => setNavbar(!navBar)} to='#'>contact</Link></li>
