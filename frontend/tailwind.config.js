@@ -5,8 +5,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        trebuchetMs: ["Trebuchet MS", "sans-serif"],
+      },
+    },
   },
   plugins: [],
 }
-
