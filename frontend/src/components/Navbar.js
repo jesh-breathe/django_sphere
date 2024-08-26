@@ -31,7 +31,7 @@ function Navbar() {
 
     return (
         <>
-            <section className='bg-blue-900 max-w-6xl lg:rounded-b-lg mx-auto'>
+            <section className='bg-blue-900 min-w-96 max-w-6xl mx-auto'>
                 <nav className='flex w-full min-w-48 justify-between top-0 text-white transition-none px-20 py-3 lg:px-10 font-sans items-center z-10 sticky'>
                     <span className="uppercase text-2xl">logo</span>
                     <ul
@@ -75,7 +75,7 @@ function Navbar() {
                 {navBar && (
                     <motion.div
                         ref={menuRef}
-                        className="absolute flex flex-col items-center float-right w-1/5 max-w-60 h-full right-0 z-10 top-0 m-0 bg-blue-700 transition-all px-8 py-8 rounded-md"
+                        className="absolute flex flex-col h-screen items-center float-right w-2/5 max-w-60 right-0 z-50 top-0 m-0 bg-white transition-all px-8 py-8 rounded-md"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -86,11 +86,11 @@ function Navbar() {
                                  <RxCross2 />
                             </Button>
                         </div>
-                        <ul className='capitalize z-10 flex flex-col gap-7 text-gray-100 text-center text-sm'>
-                            <li><Link onClick={() => setNavbar(!navBar)} to='/'>home</Link></li>
-                            <li><Link onClick={() => setNavbar(!navBar)} to='#'>about</Link></li>
-                            <li><Link onClick={() => setNavbar(!navBar)} to='#'>contact</Link></li>
-                            <li><Link onClick={() => setNavbar(!navBar)} to='#'>news</Link></li>
+                        <ul className='capitalize z-10 flex flex-col gap-7 text-gray-900 text-center text-sm'>
+                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='/'>home</Link></li>
+                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='#'>about</Link></li>
+                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='#'>contact</Link></li>
+                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='#'>news</Link></li>
                         </ul>
                     </motion.div>
                 )}
