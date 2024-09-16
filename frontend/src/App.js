@@ -2,6 +2,7 @@ import Headroom from 'react-headroom';
 import './App.css';
 import About from './components/About';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
 import Goal from './components/Goal';
 import Hero from './components/Hero';
 import Mission from './components/Mission';
@@ -20,6 +21,7 @@ function App() {
       <Vision />
       <Goal />
       <Contact />
+      <Footer />
     </div>
   );
 }
