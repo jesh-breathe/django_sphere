@@ -2,9 +2,9 @@ import React from 'react'
 
 function About() {
   return (
-    <section className='flex flex-col justify-center items-center py-8 px-4'>
+    <section className='flex flex-col border-2 p-2 max-w-3xl self-center m-auto mt-2 border-gray-300 rounded-lg justify-center items-center py-8 px-4'>
         <h2 className='text-4xl font-semibold mb-4 text-center font-trebuchetMs text-gray-800'>About Us</h2>
-        <p className='border-2 p-2 rounded-lg border-gray-300 max-w-3xl font-trebuchetMs text-lg text-gray-700 text-center leading-relaxed'>LCAACST is for not-profit; non-governmental charity organization locally
+        <p className='font-trebuchetMs text-lg text-gray-700 text-center leading-relaxed'>LCAACST is for not-profit; non-governmental charity organization locally
             registered on August 20, 2019 and accorded legal personality with registration
             number 4372. LCAACST is emulated from the global successes stories of Australia
             and Germany land cares’ profound achievement that has been adopted

@@ -1,6 +1,7 @@
 import Headroom from 'react-headroom';
 import './App.css';
 import About from './components/About';
+import Contact from './components/Contact';
 import Goal from './components/Goal';
 import Hero from './components/Hero';
 import Mission from './components/Mission';
@@ -18,6 +19,7 @@ function App() {
       <Mission />
       <Vision />
       <Goal />
+      <Contact />
     </div>
   );
 }
