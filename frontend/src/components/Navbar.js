@@ -1,102 +1,73 @@
-import { RxCross2 } from "react-icons/rx";
-import { LuUserPlus } from "react-icons/lu";
-import Button from 'react-bootstrap/Button';
-import { TiThMenu } from "react-icons/ti";
-import { motion, AnimatePresence } from "framer-motion";
-import React, { useState, useEffect, useRef } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
 
-function Navbar() {
-    const [navBar, setNavbar] = useState(false);
-    const [dropdownVisible, setDropdownVisible] = useState(false);
-    const menuRef = useRef(null);
-    const dropdownRef = useRef(null);
-    const toggleDropdown = () => setDropdownVisible(!dropdownVisible);
+const Header = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setNavbar(false);
-            }
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setDropdownVisible(false);
-            }
-        }
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
+  return (
+    <header className="bg-white shadow-md w-full">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <div className="text-2xl font-bold text-gray-800">
+          <a href="/" className="flex items-center">
+            <img src="/path/to/logo.png" alt="Company Logo" className="h-10 w-10 mr-2" />
+            {/* <span>Company</span> */}
+          </a>
+        </div>
 
-    return (
-        <>
-            <section className='bg-blue-900 min-w-96 max-w-6xl mx-auto'>
-                <nav className='flex w-full min-w-48 justify-between top-0 text-white transition-none px-20 py-3 lg:px-10 font-sans items-center z-10 sticky'>
-                    <span className="uppercase text-2xl">logo</span>
-                    <ul
-                        className={`capitalize flex space-x-4 max-md:hidden items-center text-sm ${navBar ? 'hidden' : 'flex'}`}
-                    >
-                        <li><Link to='/'>home</Link></li>
-                        <li><Link to='#'>about</Link></li>
-                        <li><Link to='#'>contact</Link></li>
-                        <li><Link to='#'>news</Link></li>
-                    </ul>
-                    <div className="flex space-x-4">
-                        <button className="lg:hidden md:hidden" onClick={() => setNavbar(!navBar)}>
-                            {navBar ? ( <span className="hidden"></span>) : ( <TiThMenu className='text-3xl' />)}
-                        </button>
-                        <div ref={dropdownRef} className="relative inline-block text-left">
-                            <Button variant="primary" onClick={toggleDropdown} className="flex items-center space-x-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <LuUserPlus className="w-6 h-6 text-gray-50"/>
-                            </Button>
-                        <AnimatePresence>
-                            {dropdownVisible && (
-                                <motion.div 
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.2, ease: "easeInOut" }}
-                                className="absolute right-0 mt-2 w-24 bg-white border border-gray-300 rounded-md shadow-lg">
-                                    <a href="#signup" className="block px-4 py-2 text-gray-700">
-                                        Signup
-                                    </a>
-                                    <a href="#login" className="block px-4 py-2 text-gray-700 hover:bg-white">
-                                        Login
-                                    </a>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                        </div>
-                    </div>
-                </nav>
-            </section>
-            <AnimatePresence>
-                {navBar && (
-                    <motion.div
-                        ref={menuRef}
-                        className="absolute flex flex-col h-screen items-center float-right w-2/5 max-w-60 right-0 z-50 top-0 m-0 bg-white transition-all px-8 py-8 rounded-md"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2, ease: "easeInOut" }}
-                    >
-                        <div>
-                            <Button variant="danger" onClick={() => setNavbar(!navBar)} className="mb-4">
-                                 <RxCross2 />
-                            </Button>
-                        </div>
-                        <ul className='capitalize z-10 flex flex-col gap-7 text-gray-900 text-center text-sm'>
-                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='/'>home</Link></li>
-                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='#'>about</Link></li>
-                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='#'>contact</Link></li>
-                            <li><Link className="hover:text-gray-400" onClick={() => setNavbar(!navBar)} to='#'>news</Link></li>
-                        </ul>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </>
-    );
-}
+        {/* Desktop Menu */}
+        <nav className="hidden md:flex space-x-8">
+          <a href="#home" className="text-gray-700 hover:text-blue-600">Home</a>
+          <a href="#about" className="text-gray-700 hover:text-blue-600">About</a>
+          <a href="#services" className="text-gray-700 hover:text-blue-600">Services</a>
+          <a href="#contact" className="text-gray-700 hover:text-blue-600">Contact</a>
+        </nav>
 
-export default Navbar;
+        {/* Mobile Menu Button */}
+        <button
+          onClick={toggleMenu}
+          className="md:hidden text-gray-800 focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            {isOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <nav className="md:hidden bg-white px-4 py-2 space-y-2 shadow-md">
+          <a href="#home" className="block text-gray-700 hover:text-blue-600">Home</a>
+          <a href="#about" className="block text-gray-700 hover:text-blue-600">About</a>
+          <a href="#services" className="block text-gray-700 hover:text-blue-600">Services</a>
+          <a href="#contact" className="block text-gray-700 hover:text-blue-600">Contact</a>
+        </nav>
+      )}
+    </header>
+  );
+};
+
+export default Header;
