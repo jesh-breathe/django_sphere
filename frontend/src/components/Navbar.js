@@ -1,11 +1,24 @@
 import React, { useState } from 'react';
+import { Button, Form, Modal } from 'react-bootstrap'; // Import necessary components from react-bootstrap
+import { FaHeart } from 'react-icons/fa'; // React icon for heart
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false); // For handling the modal visibility
+  const [donationType, setDonationType] = useState('once'); // 'once' or 'monthly'
+  const [selectedAmount, setSelectedAmount] = useState(50); // Default amount
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const handleDonateClick = () => setShowModal(true); // Show the donation modal
+  const handleCloseModal = () => setShowModal(false); // Close the modal
+
+  const handleAmountSelect = (amount) => setSelectedAmount(amount);
+  const handleTypeChange = (type) => setDonationType(type);
+  const handleDonate = () => {
+    // Here you can add your API call or logic to process the donation
+    alert(`Thank you for your donation of $${selectedAmount}!`);
+    handleCloseModal();
   };
 
   return (
@@ -19,7 +32,7 @@ const Header = () => {
         </div>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:flex space-x-8 relative">
+        <nav className="hidden md:flex space-x-8 relative items-center">
           <a href="#home" className="text-gray-700 hover:text-blue-600">Home</a>
 
           {/* Dropdown for About */}
@@ -67,7 +80,24 @@ const Header = () => {
 
           <a href="#services" className="text-gray-700 hover:text-blue-600">Services</a>
           <a href="#contact" className="text-gray-700 hover:text-blue-600">Contact</a>
+
+          {/* Donate Button for Desktop */}
+          <button
+            onClick={handleDonateClick}
+            className="hidden md:flex bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors items-center space-x-2"
+          >
+            <FaHeart className="h-5 w-5" /> {/* React Icon for heart */}
+            <span>Donate</span>
+          </button>
         </nav>
+
+        {/* Mobile Donate Button */}
+        <button
+          onClick={handleDonateClick}
+          className="md:hidden bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors flex justify-center"
+        >
+          <FaHeart className="h-5 w-5" /> {/* React Icon for heart in mobile */}
+        </button>
 
         {/* Mobile Menu Button */}
         <button
@@ -109,6 +139,63 @@ const Header = () => {
           <a href="#contact" className="block text-gray-700 hover:text-blue-600">Contact</a>
         </nav>
       )}
+
+      {/* Donate Modal Popup */}
+      <Modal show={showModal} onHide={handleCloseModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Make a Donation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {/* Toggle between Give Once and Donate Monthly */}
+          <div className="d-flex justify-content-around mb-4">
+            <Button
+              variant={donationType === 'once' ? 'primary' : 'outline-primary'}
+              onClick={() => handleTypeChange('once')}
+            >
+              Give Once
+            </Button>
+            <Button
+              variant={donationType === 'monthly' ? 'primary' : 'outline-primary'}
+              onClick={() => handleTypeChange('monthly')}
+            >
+              Donate Monthly
+            </Button>
+          </div>
+
+          {/* Preset Donation Amounts */}
+          <div className="d-flex justify-content-around mb-4">
+            {[50, 150, 250, 500].map((amount) => (
+              <Button
+                key={amount}
+                variant={selectedAmount === amount ? 'success' : 'outline-success'}
+                onClick={() => handleAmountSelect(amount)}
+              >
+                ${amount}
+              </Button>
+            ))}
+          </div>
+
+          {/* Custom Amount */}
+          <Form.Group className="mb-3">
+            <Form.Label>Or Enter Custom Amount</Form.Label>
+            <Form.Control
+              type="number"
+              placeholder="Enter amount"
+              min="1"
+              value={selectedAmount}
+              onChange={(e) => setSelectedAmount(Number(e.target.value))}
+            />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleDonate}>
+            Donate ${selectedAmount}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </header>
   );
 };
