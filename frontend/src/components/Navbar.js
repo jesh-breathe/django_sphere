@@ -1,24 +1,43 @@
 import React, { useState } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap'; // Import necessary components from react-bootstrap
-import { FaHeart } from 'react-icons/fa'; // React icon for heart
+import { Button, Form, Modal } from 'react-bootstrap';
+import { FaHeart } from 'react-icons/fa';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [showModal, setShowModal] = useState(false); // For handling the modal visibility
+  const [showDonationModal, setShowDonationModal] = useState(false); // For donation modal
+  const [showUserInfoModal, setShowUserInfoModal] = useState(false); // For user info modal
   const [donationType, setDonationType] = useState('once'); // 'once' or 'monthly'
   const [selectedAmount, setSelectedAmount] = useState(50); // Default amount
 
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    email: '',
+    creditCard: '',
+  });
+
   const toggleMenu = () => setIsOpen(!isOpen);
-  const handleDonateClick = () => setShowModal(true); // Show the donation modal
-  const handleCloseModal = () => setShowModal(false); // Close the modal
+  const handleDonateClick = () => setShowDonationModal(true); // Show donation modal
+  const handleCloseDonationModal = () => setShowDonationModal(false); // Close donation modal
+  const handleCloseUserInfoModal = () => setShowUserInfoModal(false); // Close user info modal
 
   const handleAmountSelect = (amount) => setSelectedAmount(amount);
   const handleTypeChange = (type) => setDonationType(type);
+
   const handleDonate = () => {
-    // Here you can add your API call or logic to process the donation
-    alert(`Thank you for your donation of $${selectedAmount}!`);
-    handleCloseModal();
+    setShowDonationModal(false); // Close donation modal
+    setShowUserInfoModal(true);  // Open user info modal
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserInfo((prevInfo) => ({ ...prevInfo, [name]: value }));
+  };
+
+  const handleSubmitDonation = () => {
+    // Here you can handle the final submission logic
+    alert(`Donation of $${selectedAmount} from ${userInfo.name} (${userInfo.email}) submitted successfully!`);
+    handleCloseUserInfoModal();
   };
 
   return (
@@ -34,7 +53,6 @@ const Header = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-8 relative items-center">
           <a href="#home" className="text-gray-700 hover:text-blue-600">Home</a>
-
           {/* Dropdown for About */}
           <div
             className="relative group"
@@ -141,7 +159,7 @@ const Header = () => {
       )}
 
       {/* Donate Modal Popup */}
-      <Modal show={showModal} onHide={handleCloseModal} centered>
+      <Modal show={showDonationModal} onHide={handleCloseDonationModal} centered>
         <Modal.Header closeButton>
           <Modal.Title>Make a Donation</Modal.Title>
         </Modal.Header>
@@ -188,11 +206,62 @@ const Header = () => {
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseModal}>
+          <Button variant="secondary" onClick={handleCloseDonationModal}>
             Close
           </Button>
           <Button variant="primary" onClick={handleDonate}>
-            Donate ${selectedAmount}
+            Proceed
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* User Info Modal */}
+      <Modal show={showUserInfoModal} onHide={handleCloseUserInfoModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Your Information</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your name"
+                name="name"
+                value={userInfo.name}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter your email"
+                name="email"
+                value={userInfo.email}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Credit Card</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter your credit card number"
+                name="creditCard"
+                value={userInfo.creditCard}
+                onChange={handleInputChange}
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseUserInfoModal}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmitDonation}>
+            Submit Donation
           </Button>
         </Modal.Footer>
       </Modal>
