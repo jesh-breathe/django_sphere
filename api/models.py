@@ -1,18 +1,21 @@
 from django.db import models
-
-class User(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.CharField(max_length=30)
-    password = models.CharField(max_length=500)
-
-    def __str__(self):
-        return self.first_name, self.last_name
+from django.core.validators import validate_email
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Message(models.Model):
     name = models.CharField(max_length=30)
-    email = models.CharField(max_length=30)
-    content = models.TextField()
+    email = models.EmailField(validators=[validate_email])
+    content = models.TextField
+
+    def __str__(self):
+        return self.name
+    
+class Kind(models.Model):
+    type = models.CharField(max_length=100)
+    quantity = models.IntegerField(min_value=0)
+    name = models.CharField(max_length=150)
+    phone = PhoneNumberField(blank=False)
+    email = models.EmailField(validators=[validate_email])
 
     def __str__(self):
         return self.name
