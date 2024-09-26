@@ -30,6 +30,9 @@ class Money(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(validators=[validate_email])
 
+    def __str__(self):
+        return self.name
+
 #Membership Table
 class Member(models.Model):
     name = models.CharField(max_length=100)
