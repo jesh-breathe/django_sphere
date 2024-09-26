@@ -1,8 +1,8 @@
 from django.urls import path
-from .views import get_users, create_user, user_detail
+from api.views import kind_detail, kind_list, create_kind
 
 urlpatterns = [
-    path('users/', get_users, name='get_user'),
-    path('users/create/', create_user, name='create_user'),
-    path('users/<str:first_name>', user_detail, name='user_detail'),
+    path('kind/all', kind_list, name='kind_list'),
+    path('kind/create/', create_kind, name='create_kind'),
+    path('kind/<int:pk>', kind_detail, name='kind_detail'),
 ]

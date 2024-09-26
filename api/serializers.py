@@ -1,12 +1,23 @@
 from rest_framework import serializers
-from django.contrib.auth.hashers import make_password
-from .models import User
+from api.models import Message, Kind, Money, Member
+# from django.contrib.auth.hashers import make_password
 
-class UserSerializer(serializers.ModelSerializer):
+class MessageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email', 'password']
+        model = Message
+        fields = ['name', 'email', 'content']
 
-    def validate_password(self, value: str) -> str:
-        return make_password(value)
+class KindSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kind
+        fields = ['type', 'quantity', 'name', 'phone', 'email']
 
+class MoneySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Money
+        fields = ['currency', 'amount', 'phone', 'name', 'email']
+
+class MemberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Member
+        fields = ['name', 'phone', 'email']
