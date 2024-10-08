@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from api.models import Message, Kind, Money, Member
+from api.models import Message, Kind, Money, Member, Resource
 # from django.contrib.auth.hashers import make_password
 
 class MessageSerializer(serializers.ModelSerializer):
@@ -21,3 +21,7 @@ class MemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Member
         fields = ['name', 'phone', 'email']
+
+class ResourceSerializer(serializers.ModelSerializer):
+    model = Resource
+    fields = ['file', 'description']

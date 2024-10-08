@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 from api.models import Message, Money, Kind, Member
-from .serializers import KindSerializer, MemberSerializer, MoneySerializer, MessageSerializer
+from .serializers import KindSerializer, MemberSerializer, MoneySerializer, MessageSerializer, ResourceSerializer
 
 @api_view(['POST'])
 def create_kind(request):
@@ -39,3 +39,11 @@ def kind_detail(request, pk):
     elif request.method == 'DELETE':
         kind.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+@api_view(['POST'])
+def upload(request):
+    serializer = ResourceSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

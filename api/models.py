@@ -41,3 +41,10 @@ class Member(models.Model):
 
     def __str__(self):
         return self.name
+
+class Resource(models.Model):
+    file = models.FileField(upload_to="resources/")
+    description = models.TextField(max_length=250)
+
+    def __str__(self):
+        return self.description
